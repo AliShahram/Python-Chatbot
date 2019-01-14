@@ -4,7 +4,7 @@ Client side operation, using Tkinter for the GUI
 
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
-import tkinter 
+import tkinter
 
 
 def receiveMessage():
@@ -32,32 +32,54 @@ def closeWindow(event = None):
 	sendMessage()
 
 
-
 top = tkinter.Tk()
 top.title("Chatbot")
+top.geometry("400x520")
 
+filename = tkinter.PhotoImage(file = "/Users/shahram/Desktop/Programming/python_chatbot/network.png")
+background_label = tkinter.Label(top, image=filename)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 frame = tkinter.Frame(top)
+
 message = tkinter.StringVar()
 message.set("Type your message!")
-scrollbar = tkinter.Scrollbar(frame)
 
 
-msgList = tkinter.Listbox(frame, height=15, width=50, yscrollcommand=scrollbar.set)
+scrollbar = tkinter.Scrollbar(frame, bg="#251f36")
+msgList = tkinter.Listbox(frame, height=25, width=30, yscrollcommand=scrollbar.set, bg="#251f36", fg="white")
+
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 msgList.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
 msgList.pack()
 
-frame.pack()
+frame.pack(pady=20)
+
+
+entry_field = tkinter.Entry(top, textvariable=message, bg="#251f36", fg="white")
+entry_field.bind("<Return>", sendMessage)
+send_button = tkinter.Button(top, text="Send", command=sendMessage, highlightbackground="#000000", width=8)
+entry_field.pack(side=tkinter.LEFT, padx=(55,10))
+entry_field.config(highlightbackground="black")
+send_button.pack(side=tkinter.LEFT,fill=tkinter.X)
+
+
+
+
+
+
+
+'''
+
+
+
+
+
 
 
 #Create input field 
-entry_field = tkinter.Entry(top, textvariable=message)
-entry_field.bind("<Return>", sendMessage)
-entry_field.pack(side=tkinter.LEFT, fill=tkinter.Y)
-send_button = tkinter.Button(top, text="Send", command=sendMessage, width=8)
-send_button.pack(side=tkinter.LEFT, fill=tkinter.X)
 
+'''
 top.protocol("WM_DELETE_WINDOW", closeWindow)
 
 
